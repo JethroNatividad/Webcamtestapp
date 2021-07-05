@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Layout as AntdLayout, Menu } from 'antd';
 import { VideoCameraOutlined, AudioOutlined } from '@ant-design/icons';
+import { useLocation, Link } from 'react-router-dom';
 
 const { Header, Content, Footer, Sider } = AntdLayout;
 
 const Layout = ({ children }) => {
+	const location = useLocation();
+	console.log(location);
 	const [collapsed, setCollapsed] = useState(false);
 	useEffect(() => {
 		window.onresize = (e) => {
@@ -24,12 +27,16 @@ const Layout = ({ children }) => {
 				onCollapse={(c) => setCollapsed(c)}
 			>
 				<div className='logo' />
-				<Menu theme='dark' defaultSelectedKeys={['1']} mode='inline'>
+				<Menu
+					theme='dark'
+					defaultSelectedKeys={[location.pathname === '/' ? '1' : '2']}
+					mode='inline'
+				>
 					<Menu.Item key='1' icon={<VideoCameraOutlined />}>
-						Webcam test
+						<Link to='/'>Webcam test</Link>
 					</Menu.Item>
 					<Menu.Item key='2' icon={<AudioOutlined />}>
-						Mic test
+						<Link to='/mictest'>Mic test</Link>
 					</Menu.Item>
 				</Menu>
 			</Sider>
