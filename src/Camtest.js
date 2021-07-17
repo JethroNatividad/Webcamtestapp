@@ -55,7 +55,7 @@ const Camtest = ({ videoInputs }) => {
 					loading={currentDevice === ''}
 					disabled={webcamOpen}
 				>
-					{videoInputs.map((device) => (
+					{videoInputs?.map((device) => (
 						<>
 							<Option value={device.deviceId.toString()}>
 								{device.label.toString()}
