@@ -6,8 +6,7 @@ const { Option } = Select;
 const Mictest = ({ audioInputs }) => {
 	const [currentDevice, setCurrentDevice] = useState('');
 	const audioElementRef = useRef();
-	const [webcamOpen, setWebcamOpen] = useState(false);
-
+	// const [webcamOpen, setWebcamOpen] = useState(false);
 
 	useEffect(() => {
 		setCurrentDevice(audioInputs[0]?.deviceId);
