@@ -2,9 +2,12 @@ import { Button, notification, Select, Typography } from 'antd';
 import React, { useEffect, useState, useRef } from 'react';
 
 const { Option } = Select;
+
 const Mictest = ({ audioInputs }) => {
 	const [currentDevice, setCurrentDevice] = useState('');
 	const audioElementRef = useRef();
+	const [webcamOpen, setWebcamOpen] = useState(false);
+
 
 	useEffect(() => {
 		setCurrentDevice(audioInputs[0]?.deviceId);
@@ -19,7 +22,20 @@ const Mictest = ({ audioInputs }) => {
 			audioElementRef.current.srcObject = stream;
 			audioElementRef.current.play();
 			// setWebcamOpen(true);
-			notification.success({ message: 'Audio started' });
+			notification.success({ message: 'Mic started' });
+		} catch (err) {
+			notification.error({ message: err.message });
+		}
+	};
+
+	const stopMic = async () => {
+		try {
+			audioElementRef.current.srcObject.getTracks().forEach((track) => {
+				track.stop();
+			});
+			// setWebcamOpen(false);
+
+			notification.success({ message: 'Mic stopped' });
 		} catch (err) {
 			notification.error({ message: err.message });
 		}
@@ -47,7 +63,7 @@ const Mictest = ({ audioInputs }) => {
 						</>
 					))}
 				</Select>
-				<audio ref={audioElementRef} controls />\
+				<audio ref={audioElementRef} />
 				<div>
 					<Button
 						style={{ marginRight: 5 }}
@@ -57,9 +73,9 @@ const Mictest = ({ audioInputs }) => {
 					>
 						Open mic
 					</Button>
-					{/* <Button onClick={stopWebcam} disabled={!webcamOpen} type='danger'>
-						Stop webcam
-					</Button> */}
+					<Button onClick={stopMic} type='danger'>
+						Stop mic
+					</Button>
 				</div>
 			</div>
 		</div>
